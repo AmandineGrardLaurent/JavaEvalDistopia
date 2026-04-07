@@ -1,8 +1,8 @@
 <section>
-    <div th:each="cinema : ${cinemas}">
+    <article th:each="cinema : ${cinemas}">
         <p th:text="${cinema.name + ' au ' + cinema.address + ' à ' + cinema.city.name}"></p>
 
-    </div>
+    </article>
 
     <div>
         <ul>
