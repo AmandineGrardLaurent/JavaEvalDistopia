@@ -1,0 +1,14 @@
+<section>
+    <div th:each="cinema : ${cinemas}">
+        <p th:text="${cinema.name + ' au ' + cinema.address + ' à ' + cinema.city.name}"></p>
+
+    </div>
+
+    <div>
+        <ul>
+            <li th:each="page, status : ${pages}">
+                <a th:href="@{/cinema/list(page=${status.index})}" th:text="${(status.index)+1}"></a>
+            </li>
+        </ul>
+    </div>
+</section>
