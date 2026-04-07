@@ -1,19 +1,19 @@
 package fms.Distopia.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Data;
 
-@Data
 @Entity
-public class City implements Serializable {
+@Data
+public class Cinema implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -21,9 +21,11 @@ public class City implements Serializable {
     private Long id;
 
     private String name;
-    private String zipcode;
+    private String address;
+    private double seatPrice;
 
-    @OneToMany(mappedBy = "city")
-    private Collection<Cinema> cinemas;
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
 
 }
