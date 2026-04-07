@@ -1,0 +1,62 @@
+@startuml use case diagram
+
+left to right direction
+
+rectangle "acteurs" {
+    actor "connecté" as USER_CONNECTED
+    actor "visiteur" as VISITOR
+    actor "admin" as ADMIN
+}
+
+
+USER_CONNECTED --|> VISITOR
+ADMIN --|> USER_CONNECTED
+
+
+package "Application de gestion de cinémas" {
+    rectangle "Affichage"{
+        usecase "afficher tous les cinémas" as DISPLAY_CINEMA
+        usecase "afficher tous les films" as DISPLAY_MOVIES
+        usecase "afficher toutes les séances d'un film" as DISPLAY_SCREENINGS
+        usecase "rechercher un cinéma par mot-clé" as SEARCH_CINEMA
+    }
+    
+    usecase "faire une réservation" as MAKE_RESERVATION
+
+    rectangle "Administration" {
+        usecase "gérer des films" as MANAGE_MOVIES
+        usecase "gérer des cinémas" as MANAGE_CINEMAS
+        usecase "gérer des villes" as MANAGE_CITIES
+        usecase "gérer des séances" as MANAGE_SCREENINGS
+    }
+   
+    usecase "se connecter" as CONNECT
+}
+
+VISITOR -- DISPLAY_CINEMA
+VISITOR -- DISPLAY_MOVIES
+VISITOR -- DISPLAY_SCREENINGS
+VISITOR -- SEARCH_CINEMA
+
+USER_CONNECTED -- MAKE_RESERVATION
+
+ADMIN -- MANAGE_MOVIES
+ADMIN -- MANAGE_CINEMAS
+ADMIN -- MANAGE_CITIES
+ADMIN -- MANAGE_SCREENINGS
+
+MAKE_RESERVATION ..> CONNECT : <<include>>
+MANAGE_MOVIES ..> CONNECT : <<include>>
+MANAGE_CINEMAS ..> CONNECT : <<include>>
+MANAGE_CITIES ..> CONNECT : <<include>>
+MANAGE_SCREENINGS ..> CONNECT : <<include>>
+
+
+ note top of "Administration"
+      gérer signifie : 
+      - créer
+      - modifier
+      - supprimer
+end note
+
+@enduml
