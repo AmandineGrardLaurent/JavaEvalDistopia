@@ -1,6 +1,7 @@
 package fms.Distopia.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -9,27 +10,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import lombok.Data;
 
 @Entity
 @Data
-public class Cinema implements Serializable {
+public class Screening implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String address;
-    private double seatPrice;
+    private LocalDateTime date;
 
     @ManyToOne
-    @JoinColumn(name = "city_id")
-    private City city;
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
 
-    @OneToMany(mappedBy = "cinema")
-    private Collection<Screening> screenings;
+    @ManyToOne
+    @JoinColumn(name = "cinema_id")
+    private Cinema cinema;
+
 }
