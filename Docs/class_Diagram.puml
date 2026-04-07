@@ -1,0 +1,56 @@
+@startuml class diagram
+
+class User {
+    - id : Long
+    - lastname : String
+    - firstname : String
+    - password : String
+    - email : String
+    - role : Role
+}
+
+enum Role {
+    ADMIN
+    USER
+}
+
+class City {
+    - id : Long
+    - name : String
+    - zipcode : String
+}
+
+class Cinema {
+    - id : Long
+    - name : String
+    - address : String
+    - seatPrice : double
+}
+
+class Movie {
+    - id : Long
+    - title : String
+    - description : String
+    - duration : int 
+    - genre : String
+}
+
+class Screening {
+    - id : Long
+    - date : LocalDateTime
+}
+
+class Reservation {
+    - id : Long
+    - reservationDate : LocalDateTime
+    - seats : int
+}
+
+City "1" --> "0..*" Cinema : possède
+Cinema "1" --> "0..*" Screening : programme
+Movie "1" --> "0..*" Screening : est programmé pour
+User "1" --> "0..*" Reservation : effectue
+Screening "1" --> "0..*" Reservation : reçoit
+
+
+@enduml
