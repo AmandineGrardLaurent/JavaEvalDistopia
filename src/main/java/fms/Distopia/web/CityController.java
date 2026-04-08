@@ -36,29 +36,42 @@ public class CityController {
     @GetMapping("/list")
     public String listCities(Model model, HttpSession session) {
 
-        // if (!AuthHelper.isAdmin(session)) {
-        // return "redirect:/login";
-        // }
+        if (!AuthHelper.isAdmin(session)) {
+            return "redirect:/login";
+        }
         model.addAttribute("cities", cityRepository.findAll());
         return "admin/city/list";
     }
 
     /**
      * Deletes a city by its ID.
-     * Only accessible to admin users.
+     * 
+     * @return redirect to the city list view if successful, otherwise redirect to
+     *         login
      */
     @GetMapping("/delete")
     public String deleteCity(Long id, HttpSession session) {
 
-        // if (!AuthHelper.isAdmin(session)) {
-        // return "redirect:/login";
-        // }
+        if (!AuthHelper.isAdmin(session)) {
+            return "redirect:/login";
+        }
         cityRepository.deleteById(id);
         return "redirect:/admin/city/list";
     }
 
+    /**
+     * Handles the submission of the city form for both creation and update.
+     * 
+     * @return redirect to the city list if successful, otherwise return to the form
+     *         view
+     */
     @PostMapping("/save")
-    public String save(Model model, @Valid City city, BindingResult bindingResult) {
+    public String save(Model model, @Valid City city, BindingResult bindingResult, HttpSession session) {
+
+        if (!AuthHelper.isAdmin(session)) {
+            return "redirect:/login";
+        }
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("city", city);
             return "admin/city/form";
@@ -68,8 +81,18 @@ public class CityController {
         return "redirect:/admin/city/list";
     }
 
+    /**
+     * Displays the city form for creating a new city or editing an existing one.
+     * 
+     * @return the city form view if user is admin, otherwise redirect to login
+     */
     @GetMapping("/form")
-    public String form(Model model, @RequestParam(required = false) Long id) {
+    public String form(Model model, @RequestParam(required = false) Long id, HttpSession session) {
+
+        if (!AuthHelper.isAdmin(session)) {
+            return "redirect:/login";
+        }
+
         City city;
         if (id != null) {
             city = cityRepository.findById(id).orElse(new City());
