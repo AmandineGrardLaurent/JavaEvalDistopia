@@ -3,6 +3,7 @@ package fms.Distopia.entities;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +31,6 @@ public class Cinema implements Serializable {
     @JoinColumn(name = "city_id")
     private City city;
 
-    @OneToMany(mappedBy = "cinema")
+    @OneToMany(mappedBy = "cinema", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Screening> screenings;
 }

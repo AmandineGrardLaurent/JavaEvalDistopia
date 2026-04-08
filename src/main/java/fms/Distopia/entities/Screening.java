@@ -28,7 +28,7 @@ public class Screening implements Serializable {
     private Movie movie;
 
     @ManyToOne
-    @JoinColumn(name = "cinema_id")
+    @JoinColumn(name = "cinema_id", nullable = false)
     private Cinema cinema;
 
 }
