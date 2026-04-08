@@ -1,4 +1,17 @@
-<div th:each="screening : ${screenings}">
-    <p th:text="${screening.movie.title}"></p>
-    <p th:text="${screening.date}"></p>
-</div>
+<section>
+  <article th:each="movie : ${screeningsByMovie}">
+
+    <!-- movie title -->
+    <h2 th:text="${movie.key.title}"></h2>
+
+    <!-- movie description -->
+    <p th:text="${movie.key.description}"></p>
+
+    <!-- screenings dates -->
+    <ul>
+      <li th:each="screening : ${movie.value}">
+        <span th:text="${screening.date}"></span>
+      </li>
+    </ul>
+  </article>
+</section>

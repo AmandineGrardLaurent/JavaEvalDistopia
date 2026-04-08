@@ -1,6 +1,8 @@
 package fms.Distopia.web;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +16,7 @@ import fms.Distopia.dao.CinemaRepository;
 import fms.Distopia.dao.CityRepository;
 import fms.Distopia.dao.ScreeningRepository;
 import fms.Distopia.entities.Cinema;
+import fms.Distopia.entities.Movie;
 import fms.Distopia.entities.Screening;
 
 @Controller
@@ -65,12 +68,17 @@ public class CinemaController {
      * 
      * @return the "cinema/screenings" view template
      */
-    @GetMapping("/cinema/screening")
+    @GetMapping("/cinema/screenings")
     public String listScreenings(Model model, @RequestParam(name = "cinemaId") Long cinemaId) {
 
         List<Screening> screenings = screeningRepository.findByCinemaId(cinemaId);
 
-        model.addAttribute("screenings", screenings);
+        // Group all screenings by their associated movie
+        // Result: each Movie key maps to a list of its screenings
+        Map<Movie, List<Screening>> screeningsByMovie = screenings.stream()
+                .collect(Collectors.groupingBy(Screening::getMovie));
+
+        model.addAttribute("screeningsByMovie", screeningsByMovie);
 
         return "cinema/screenings";
     }
