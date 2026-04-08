@@ -35,10 +35,14 @@
 <!-- Cinema list -->
 <section>
   <article th:each="cinema : ${cinemas}">
-    <a
+    <p
       th:text="${cinema.name + ' au ' + cinema.address + ' à ' + cinema.city.name}"
-      th:href="@{/cinema/screening(cinemaId=${cinema.id})}"
-    ></a>
+      
+    ></p>
+     <a
+          th:href="@{/cinema/screening(cinemaId=${cinema.id})}"
+          th:text="${'Voir les séances'}"
+        ></a>
   </article>
 
   <!-- Pagination -->
