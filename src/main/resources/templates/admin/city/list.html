@@ -14,9 +14,17 @@
       <section>
         <article th:each="city : ${cities}">
           <p th:text="${city.name + ' - ' + city.zipcode}"></p>
-          <a th:text="Supprimer" th:href="@{/city/delete(id=${city.id})}"></a>
+          <a
+            th:text="Supprimer"
+            th:href="@{/admin/city/delete(id=${city.id})}"
+          ></a>
+          <a
+            th:text="Modifier"
+            th:href="@{/admin/city/form(id=${city.id})}"
+          ></a>
         </article>
       </section>
+      <a th:href="@{/admin/city/form}"> Ajouter une nouvelle ville </a>
     </div>
   </body>
 </html>
