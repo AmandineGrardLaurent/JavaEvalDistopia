@@ -1,59 +1,73 @@
-<!-- Search Form -->
-<section>
-  <form th:action="@{/cinema/list}" method="get">
-    <label> 🔍 </label>
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title>Liste des cinémas</title>
+  </head>
 
-    <input
-      type="text"
-      name="search"
-      placeholder="Rechercher un cinéma..."
-      th:value="${search}"
-    />
+  <body>
+    <div layout:fragment="content">
+      <!-- Search Form -->
+      <section>
+        <form th:action="@{/cinema/list}" method="get">
+          <label> 🔍 </label>
 
-    <button type="submit">Rechercher</button>
-  </form>
-</section>
+          <input
+            type="text"
+            name="search"
+            placeholder="Rechercher un cinéma..."
+            th:value="${search}"
+          />
 
-<!-- Filters by city -->
-<section>
-  <ul>
-    <li th:each="city : ${cities}">
-      <a
-        th:href="@{/cinema/list(page=0, cityName=${city.name}, search=${search})}"
-        th:text="${city.name}"
-      ></a>
-    </li>
-    <!-- All cities -->
-    <li>
-      <a th:href="@{/cinema/list(page=0,  search=${search})}">
-        Toutes les villes
-      </a>
-    </li>
-  </ul>
-</section>
+          <button type="submit">Rechercher</button>
+        </form>
+      </section>
 
-<!-- Cinema list -->
-<section>
-  <article th:each="cinema : ${cinemas}">
-    <p
-      th:text="${cinema.name + ' au ' + cinema.address + ' à ' + cinema.city.name}"
-      
-    ></p>
-     <a
-          th:href="@{/cinema/screenings(cinemaId=${cinema.id})}"
-          th:text="${'Voir les séances'}"
-        ></a>
-  </article>
+      <!-- Filters by city -->
+      <section>
+        <ul>
+          <li th:each="city : ${cities}">
+            <a
+              th:href="@{/cinema/list(page=0, cityName=${city.name}, search=${search})}"
+              th:text="${city.name}"
+            ></a>
+          </li>
+          <!-- All cities -->
+          <li>
+            <a th:href="@{/cinema/list(page=0,  search=${search})}">
+              Toutes les villes
+            </a>
+          </li>
+        </ul>
+      </section>
 
-  <!-- Pagination -->
-  <div>
-    <ul>
-      <li th:each="page, status : ${pages}">
-        <a
-          th:href="@{/cinema/list(page=${status.index}, cityName=${cityName}, search=${search})}"
-          th:text="${(status.index)+1}"
-        ></a>
-      </li>
-    </ul>
-  </div>
-</section>
+      <!-- Cinema list -->
+      <section>
+        <article th:each="cinema : ${cinemas}">
+          <p
+            th:text="${cinema.name + ' au ' + cinema.address + ' à ' + cinema.city.name}"
+          ></p>
+          <a
+            th:href="@{/cinema/screenings(cinemaId=${cinema.id})}"
+            th:text="${'Voir les séances'}"
+          ></a>
+        </article>
+
+        <!-- Pagination -->
+        <div>
+          <ul>
+            <li th:each="page, status : ${pages}">
+              <a
+                th:href="@{/cinema/list(page=${status.index}, cityName=${cityName}, search=${search})}"
+                th:text="${(status.index)+1}"
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
