@@ -1,15 +1,33 @@
+<!-- Search Form -->
+<section>
+  <form th:action="@{/cinema/list}" method="get">
+    <label> 🔍 </label>
+
+    <input
+      type="text"
+      name="search"
+      placeholder="Rechercher un cinéma..."
+      th:value="${search}"
+    />
+
+    <button type="submit">Rechercher</button>
+  </form>
+</section>
+
 <!-- Filters by city -->
 <section>
   <ul>
     <li th:each="city : ${cities}">
       <a
-        th:href="@{/cinema/list(page=0, cityName=${city.name})}"
+        th:href="@{/cinema/list(page=0, cityName=${city.name}, search=${search})}"
         th:text="${city.name}"
       ></a>
     </li>
     <!-- All cities -->
     <li>
-      <a th:href="@{/cinema/list(page=0)}"> Toutes les villes </a>
+      <a th:href="@{/cinema/list(page=0,  search=${search})}">
+        Toutes les villes
+      </a>
     </li>
   </ul>
 </section>
@@ -27,7 +45,7 @@
     <ul>
       <li th:each="page, status : ${pages}">
         <a
-          th:href="@{/cinema/list(page=${status.index}, cityName=${cityName})}"
+          th:href="@{/cinema/list(page=${status.index}, cityName=${cityName}, search=${search})}"
           th:text="${(status.index)+1}"
         ></a>
       </li>

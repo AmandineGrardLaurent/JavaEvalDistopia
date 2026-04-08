@@ -30,14 +30,16 @@ public class CinemaController {
     @GetMapping("/cinema/list")
     public String read(Model model,
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "cityName", required = false) String cityName) {
+            @RequestParam(name = "cityName", required = false) String cityName,
+            @RequestParam(name = "search", defaultValue = "") String search) {
 
         Page<Cinema> cinemas;
 
         if (cityName != null && !cityName.isEmpty()) {
-            cinemas = cinemaRepository.findByCityName(cityName, PageRequest.of(page, 6));
+            cinemas = cinemaRepository.findByCityNameAndNameContainsIgnoreCase(cityName, search,
+                    PageRequest.of(page, 6));
         } else {
-            cinemas = cinemaRepository.findAll(PageRequest.of(page, 6));
+            cinemas = cinemaRepository.findByNameContainsIgnoreCase(search, PageRequest.of(page, 6));
         }
 
         model.addAttribute("cinemas", cinemas);
@@ -45,6 +47,7 @@ public class CinemaController {
         model.addAttribute("currentPage", page);
         model.addAttribute("cityName", cityName);
         model.addAttribute("cities", cityRepository.findAll());
+        model.addAttribute("search", search);
 
         return "cinema/list";
     }
