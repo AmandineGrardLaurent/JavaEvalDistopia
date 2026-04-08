@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 @RequestMapping("/admin/city")
-public class CityController {
+public class AdminCityController {
     @Autowired
     CityRepository cityRepository;
 
