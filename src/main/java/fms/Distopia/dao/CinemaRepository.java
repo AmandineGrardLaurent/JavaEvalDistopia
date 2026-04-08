@@ -9,4 +9,8 @@ import fms.Distopia.entities.Cinema;
 public interface CinemaRepository extends JpaRepository<Cinema, Long> {
 
     public Page<Cinema> findByCityName(String cityName, Pageable pageable);
+
+    public Page<Cinema> findByCityNameAndNameContainsIgnoreCase(String cityName, String search, Pageable pageable);
+
+    public Page<Cinema> findByNameContainsIgnoreCase(String search, Pageable pageable);
 }
