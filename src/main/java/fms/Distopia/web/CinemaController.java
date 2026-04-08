@@ -35,7 +35,7 @@ public class CinemaController {
      * @return the "cinema/list" view template
      */
     @GetMapping("/cinema/list")
-    public String read(Model model,
+    public String listCinemas(Model model,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "cityName", required = false) String cityName,
             @RequestParam(name = "search", defaultValue = "") String search) {
