@@ -1,14 +1,36 @@
+<!-- Filters by city -->
 <section>
-    <article th:each="cinema : ${cinemas}">
-        <p th:text="${cinema.name + ' au ' + cinema.address + ' à ' + cinema.city.name}"></p>
+  <ul>
+    <li th:each="city : ${cities}">
+      <a
+        th:href="@{/cinema/list(page=0, cityName=${city.name})}"
+        th:text="${city.name}"
+      ></a>
+    </li>
+    <!-- All cities -->
+    <li>
+      <a th:href="@{/cinema/list(page=0)}"> Toutes les villes </a>
+    </li>
+  </ul>
+</section>
 
-    </article>
+<!-- Cinema list -->
+<section>
+  <article th:each="cinema : ${cinemas}">
+    <p
+      th:text="${cinema.name + ' au ' + cinema.address + ' à ' + cinema.city.name}"
+    ></p>
+  </article>
 
-    <div>
-        <ul>
-            <li th:each="page, status : ${pages}">
-                <a th:href="@{/cinema/list(page=${status.index})}" th:text="${(status.index)+1}"></a>
-            </li>
-        </ul>
-    </div>
+  <!-- Pagination -->
+  <div>
+    <ul>
+      <li th:each="page, status : ${pages}">
+        <a
+          th:href="@{/cinema/list(page=${status.index}, cityName=${cityName})}"
+          th:text="${(status.index)+1}"
+        ></a>
+      </li>
+    </ul>
+  </div>
 </section>
