@@ -1,0 +1,4 @@
+<div th:each="screening : ${screenings}">
+    <p th:text="${screening.movie.title}"></p>
+    <p th:text="${screening.date}"></p>
+</div>

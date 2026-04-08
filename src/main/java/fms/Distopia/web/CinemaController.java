@@ -1,5 +1,7 @@
 package fms.Distopia.web;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import fms.Distopia.dao.CinemaRepository;
 import fms.Distopia.dao.CityRepository;
+import fms.Distopia.dao.ScreeningRepository;
 import fms.Distopia.entities.Cinema;
+import fms.Distopia.entities.Screening;
 
 @Controller
 public class CinemaController {
@@ -20,6 +24,9 @@ public class CinemaController {
 
     @Autowired
     CityRepository cityRepository;
+
+    @Autowired
+    ScreeningRepository screeningRepository;
 
     /**
      * Displays the list of cinemas with optional pagination and city name-based
@@ -50,6 +57,22 @@ public class CinemaController {
         model.addAttribute("search", search);
 
         return "cinema/list";
+    }
+
+    /**
+     * Displays the list of screenings for a specific cinema based on the provided
+     * cinema ID.
+     * 
+     * @return the "cinema/screenings" view template
+     */
+    @GetMapping("/cinema/screening")
+    public String listScreenings(Model model, @RequestParam(name = "cinemaId") Long cinemaId) {
+
+        List<Screening> screenings = screeningRepository.findByCinemaId(cinemaId);
+
+        model.addAttribute("screenings", screenings);
+
+        return "cinema/screenings";
     }
 
 }
