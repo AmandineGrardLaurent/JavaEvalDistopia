@@ -2,13 +2,25 @@
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
-<head>
-     <meta charset="ISO-8859-1" />
+  <head>
+    <meta charset="ISO-8859-1" />
     <title>Distopia</title>
-</head>
-<body>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div
+          th:if="${session.user != null and session.user.role.name() == 'ADMIN'}"
+        >
+          <a th:href="@{/admin/city/list}">Villes</a>
+          <!-- <a th:href="@{/admin/cinema/list}">Cinemas</a> -->
+          <!-- <a th:href="@{/admin/movie/list}">Films</a> -->
+          <!-- <a th:href="@{/admin/screenings/list}">Séances</a> -->
+        </div>
+      </nav>
+    </header>
     <main>
-        <section layout:fragment="content"></section>
+      <section layout:fragment="content"></section>
     </main>
-</body>
+  </body>
 </html>
