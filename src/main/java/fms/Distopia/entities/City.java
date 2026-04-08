@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -20,7 +21,10 @@ public class City implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Le nom de la ville est obligatoire")
     private String name;
+
+    @NotNull(message = "Le code postal de la ville est obligatoire")
     private String zipcode;
 
     @OneToMany(mappedBy = "city")
