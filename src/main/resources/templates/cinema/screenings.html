@@ -45,16 +45,35 @@
             </p>
 
             <div class="flex flex-wrap gap-2">
-              <span
+              <div
                 th:each="screening : ${movie.value}"
-                class="px-3 py-1 rounded-full bg-cinemaBg border border-white/10 text-sm text-white/80 hover:border-cinemaAccent transition"
+                class="flex items-center gap-2 px-3 py-1 rounded-full bg-cinemaBg border border-white/10 hover:border-cinemaAccent transition"
               >
+                <!-- horaire -->
                 <span
-                  th:text="${#temporals.format(screening.date, 'dd MMM • HH:mm')}"
-                ></span>
-              </span>
+                  class="text-sm text-white/80"
+                  th:text="${#temporals.format(screening.date, 'EEEE dd MMM • HH:mm')}"
+                >
+                </span>
+
+                <!-- Button "réserver" for USER -->
+                <a
+                  th:if="${session.user != null and session.user.role.name() == 'USER'}"
+                  th:href="@{/screening/reserve(id=${screening.id})}"
+                  class="ml-2 px-2 py-0.5 text-xs rounded bg-cinemaAccent text-white hover:opacity-90 transition"
+                >
+                  Réserver
+                </a>
+              </div>
             </div>
           </div>
+          <!-- Message for VISITOR -->
+          <p
+            th:if="${session.user == null}"
+            class="mt-3 text-sm text-grey-400 italic underline"
+          >
+            Pour effectuer une réservation, vous devez vous connecter !
+          </p>
         </article>
       </section>
     </div>
