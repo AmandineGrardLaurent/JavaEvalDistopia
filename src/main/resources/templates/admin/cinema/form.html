@@ -1,55 +1,96 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout}">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title>Formulaire cinéma</title>
+  </head>
 
-<head>
-  <title>Formulaire cinema</title>
-</head>
+  <body>
+    <div layout:fragment="content" class="max-w-2xl mx-auto space-y-6">
+      <!-- Title -->
+      <h1 class="text-2xl font-semibold text-cinemaAccent">
+        <span
+          th:text="${cinema.id == null} ? 'Ajouter un cinéma' : 'Modifier le cinéma #' + cinema.name"
+        ></span>
+      </h1>
 
-<body>
-  <div layout:fragment="content">
-    <!-- Title -->
-    <h1 th:text="${cinema.id == null} 
-          ? 'Ajouter un cinema' 
-          : 'Modifier le cinema n° ' + cinema.id"></h1>
-    <!-- formulaire -->
-    <form th:action="@{/admin/cinema/save}" method="post" th:object="${cinema}">
-      <!-- id -->
-      <input type="hidden" th:field="*{id}" />
+      <!-- Form -->
+      <form
+        th:action="@{/admin/cinema/save}"
+        method="post"
+        th:object="${cinema}"
+        class="bg-cinemaCard border border-white/10 rounded-lg p-6 space-y-4"
+      >
+        <!-- id -->
+        <input type="hidden" th:field="*{id}" />
 
-      <!-- name -->
-      <label for="name">Nom du cinema</label>
-      <input id="name" type="text" th:field="*{name}" placeholder="UGC, CGR..." />
-      <span th:errors="${cinema.name}"></span>
-
-      <!-- address -->
-      <label for="address">Adresse du cinéma</label>
-      <input id="address" type="text" th:field="*{address}" placeholder="5 Quai des Chartrons..." />
-      <span th:errors="${cinema.address}"></span>
-
-      <!-- seatPrice -->
-      <label for="seatPrice">Prix d'une place</label>
-      <input id="seatPrice" type="number" th:field="*{seatPrice}" step="0.5" />
-      <span th:errors="${cinema.seatPrice}"></span>
-
-      <!-- city -->
-      <label for="city">
-        Ville
-      </label>
-
-      <div>
-        <div th:each="city : ${cities}">
-          <input type="radio" th:field="*{city.id}" th:value="${city.id}" />
-
-          <label th:text="${city.name}"></label>
+        <!-- name -->
+        <div>
+          <label class="text-sm text-cinemaSoft">Nom du cinéma</label>
+          <input
+            type="text"
+            th:field="*{name}"
+            placeholder="UGC Bordeaux..."
+            class="w-full mt-1 px-3 py-2 bg-cinemaBg border border-white/10 rounded text-white focus:outline-none focus:border-cinemaAccent"
+          />
+          <p class="text-red-400 text-sm" th:errors="*{name}"></p>
         </div>
-      </div>
 
-      <!-- button -->
-      <button type="submit" th:text="${cinema.id == null} ? 'Enregistrer' : 'Modifier'"></button>
+        <!-- Address -->
+        <div>
+          <label class="text-sm text-cinemaSoft">Adresse</label>
+          <input
+            type="text"
+            th:field="*{address}"
+            placeholder="5 Quai des Chartrons..."
+            class="w-full mt-1 px-3 py-2 bg-cinemaBg border border-white/10 rounded text-white focus:outline-none focus:border-cinemaAccent"
+          />
+          <p class="text-red-400 text-sm" th:errors="*{address}"></p>
+        </div>
 
-    </form>
-  </div>
-</body>
+        <!-- Seat price -->
+        <div>
+          <label class="text-sm text-cinemaSoft">Prix d'une place (€)</label>
+          <input
+            type="number"
+            step="0.5"
+            th:field="*{seatPrice}"
+            class="w-full mt-1 px-3 py-2 bg-cinemaBg border border-white/10 rounded text-white focus:outline-none focus:border-cinemaAccent"
+          />
+          <p class="text-red-400 text-sm" th:errors="*{seatPrice}"></p>
+        </div>
 
+        <!-- City -->
+        <div>
+          <label class="text-sm text-cinemaSoft">Ville</label>
+
+          <div class="mt-2 grid grid-cols-2 gap-2">
+            <label
+              th:each="city : ${cities}"
+              class="flex items-center gap-2 p-2 border border-white/10 rounded hover:border-cinemaAccent cursor-pointer"
+            >
+              <input
+                type="radio"
+                th:field="*{city.id}"
+                th:value="${city.id}"
+                class="accent-cinemaAccent"
+              />
+
+              <span class="text-sm text-white" th:text="${city.name}"> </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Button -->
+        <button
+          type="submit"
+          class="w-full py-2 bg-cinemaAccent rounded hover:opacity-90 transition font-medium text-white"
+          th:text="${cinema.id == null} ? 'Enregistrer' : 'Modifier'"
+        ></button>
+      </form>
+    </div>
+  </body>
 </html>
