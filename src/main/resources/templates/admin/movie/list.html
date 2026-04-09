@@ -1,0 +1,75 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title>Admin - Films</title>
+  </head>
+
+  <body>
+    <div layout:fragment="content" class="space-y-8">
+      <!-- Header -->
+      <section class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold text-cinemaAccent tracking-wide">
+          Gestion des films
+        </h1>
+
+        <a
+          th:href="@{/admin/movie/form}"
+          class="px-5 py-2 bg-cinemaAccent text-white rounded-lg hover:opacity-90 transition "
+        >
+          + Ajouter un film
+        </a>
+      </section>
+
+      <!-- Movie list -->
+      <section class="grid gap-4">
+        <article
+          th:each="movie : ${movies}"
+          class="bg-cinemaCard border border-white/10 rounded-xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4 hover:shadow-lg hover:shadow-black/30 transition"
+        >
+          <!-- Left: movie info -->
+          <div class="space-y-2">
+            <!-- Title -->
+            <h2
+              class="text-xl font-semibold text-white"
+              th:text="${movie.title}"
+            ></h2>
+
+            <!-- Meta -->
+            <div class="flex flex-wrap gap-3 text-sm text-white/60">
+              <span th:text="${movie.genre}"></span>
+              <span>•</span>
+              <span th:text="${movie.duration + ' min'}"></span>
+            </div>
+
+            <!-- Description -->
+            <p
+              class="text-sm text-white/70 leading-relaxed max-w-2xl"
+              th:text="${movie.description}"
+            ></p>
+          </div>
+
+          <!-- Right: actions -->
+          <div class="flex md:flex-col gap-3 text-sm">
+            <a
+              th:href="@{/admin/movie/form(id=${movie.id})}"
+              class="px-4 py-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition text-center"
+            >
+              Modifier
+            </a>
+
+            <a
+              th:href="@{/admin/movie/delete(id=${movie.id})}"
+              class="px-4 py-2 rounded-lg bg-red-500/10 text-red-300 hover:bg-red-500/20 transition text-center"
+            >
+              Supprimer
+            </a>
+          </div>
+        </article>
+      </section>
+    </div>
+  </body>
+</html>
