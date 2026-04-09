@@ -1,29 +1,66 @@
 <!doctype html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout}"
->
-  <head>
-    <title>Liste des cinémas</title>
-  </head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}">
 
-  <body>
-    <div layout:fragment="content">
-      <!-- Cinema list -->
-      <section>
-        <article th:each="cinema : ${cinemas}">
-          <p
-            th:text="${cinema.name + ' - ' + cinema.address + ' ' + cinema.city.zipcode  + ' ' + cinema.city.name}"
-          ></p>
-          <p th:text="${'Prix du ticket : ' + cinema.seatPrice + '€'}"></p>
-          <a
-            th:text="Supprimer"
-            th:href="@{/admin/cinema/delete(id=${cinema.id})}"
-          ></a>
-        </article>
-      </section>
-      <a th:href="@{/admin/cinema/form}"> Ajouter un nouveau cinema </a>
-    </div>
-  </body>
+<head>
+  <title>Admin - Cinémas</title>
+</head>
+
+<body>
+
+  <div layout:fragment="content" class="space-y-6">
+
+    <!-- Title -->
+    <section class="flex items-center justify-between">
+      <h2 class="text-2xl font-semibold text-cinemaAccent">
+        Gestion des cinémas
+      </h2>
+
+      <a th:href="@{/admin/cinema/form}"
+        class="px-4 py-2 bg-cinemaAccent rounded hover:opacity-90 transition text-white">
+        + Ajouter un cinéma
+      </a>
+    </section>
+
+    <!-- Cinemas -->
+    <section class="grid gap-4">
+
+      <article th:each="cinema : ${cinemas}"
+        class="bg-cinemaCard border border-white/10 rounded-lg p-4 flex justify-between items-start">
+
+        <div class="space-y-1">
+
+          <!-- Name -->
+          <p class="text-white font-medium" th:text="${cinema.name}">
+          </p>
+
+          <!-- Address -->
+          <p class="text-cinemaSoft text-sm"
+            th:text="${cinema.address + ' • ' + cinema.city.zipcode + ' ' + cinema.city.name}">
+          </p>
+
+          <!-- Seat price -->
+          <p class="text-xs text-white/50" th:text="${'Prix du ticket : ' + cinema.seatPrice + ' €'}">
+          </p>
+
+        </div>
+
+        <!-- Delete cinema -->
+        <div>
+
+          <a th:href="@{/admin/cinema/delete(id=${cinema.id})}"
+            class="text-sm text-red-400 hover:text-red-300 transition">
+            Supprimer
+          </a>
+
+        </div>
+
+      </article>
+
+    </section>
+
+  </div>
+
+</body>
+
 </html>
