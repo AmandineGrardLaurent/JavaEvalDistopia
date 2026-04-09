@@ -18,7 +18,7 @@
 
         <a
           th:href="@{/admin/movie/form}"
-          class="px-5 py-2 bg-cinemaAccent text-white rounded-lg hover:opacity-90 transition "
+          class="px-5 py-2 bg-cinemaAccent text-white rounded-lg hover:opacity-90 transition"
         >
           + Ajouter un film
         </a>
@@ -30,7 +30,6 @@
           th:each="movie : ${movies}"
           class="bg-cinemaCard border border-white/10 rounded-xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4 hover:shadow-lg hover:shadow-black/30 transition"
         >
-          <!-- Left: movie info -->
           <div class="space-y-2">
             <!-- Title -->
             <h2
@@ -38,8 +37,8 @@
               th:text="${movie.title}"
             ></h2>
 
-            <!-- Meta -->
-            <div class="flex flex-wrap gap-3 text-sm text-white/60">
+            <!-- Genre + Duration -->
+            <div class="flex flex-wrap gap-3 text-sm text-cinemaSoft">
               <span th:text="${movie.genre}"></span>
               <span>•</span>
               <span th:text="${movie.duration + ' min'}"></span>
@@ -52,18 +51,19 @@
             ></p>
           </div>
 
-          <!-- Right: actions -->
-          <div class="flex md:flex-col gap-3 text-sm">
+          <div class="flex gap-4 text-sm">
+            <!-- Update -->
             <a
               th:href="@{/admin/movie/form(id=${movie.id})}"
-              class="px-4 py-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition text-center"
+              class="text-cinemaSoft hover:text-white transition"
             >
               Modifier
             </a>
 
+            <!-- Delete -->
             <a
               th:href="@{/admin/movie/delete(id=${movie.id})}"
-              class="px-4 py-2 rounded-lg bg-red-500/10 text-red-300 hover:bg-red-500/20 transition text-center"
+              class="text-red-400 hover:text-red-300 transition"
             >
               Supprimer
             </a>
