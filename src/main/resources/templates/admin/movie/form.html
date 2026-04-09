@@ -1,0 +1,91 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title>Formulaire film</title>
+  </head>
+
+  <body>
+    <div layout:fragment="content" class="max-w-2xl mx-auto space-y-6">
+
+      <!-- Title -->
+      <h1 class="text-2xl font-semibold text-cinemaAccent">
+        <span
+          th:text="${movie.id == null} ? 'Ajouter un film' : 'Modifier le film'"
+        ></span>
+      </h1>
+
+      <!-- Form -->
+      <form
+        th:action="@{/admin/movie/save}"
+        method="post"
+        th:object="${movie}"
+        class="bg-cinemaCard border border-white/10 rounded-xl p-6 space-y-5"
+      >
+
+        <!-- id -->
+        <input type="hidden" th:field="*{id}" />
+
+        <!-- Movie title -->
+        <div>
+          <label class="text-sm text-cinemaSoft">Titre du film</label>
+          <input
+            type="text"
+            th:field="*{title}"
+            placeholder="Inception, The Matrix..."
+            class="w-full mt-1 px-3 py-2 bg-cinemaBg border border-white/10 rounded text-white focus:outline-none focus:border-cinemaAccent"
+          />
+          <p class="text-red-400 text-sm" th:errors="*{title}"></p>
+        </div>
+
+        <!-- Movie description -->
+        <div>
+          <label class="text-sm text-cinemaSoft">Description</label>
+          <textarea
+            th:field="*{description}"
+            rows="4"
+            placeholder="Résumé du film..."
+            class="w-full mt-1 px-3 py-2 bg-cinemaBg border border-white/10 rounded text-white focus:outline-none focus:border-cinemaAccent"
+          ></textarea>
+          <p class="text-red-400 text-sm" th:errors="*{description}"></p>
+        </div>
+
+        <!-- Movie genre -->
+        <div>
+          <label class="text-sm text-cinemaSoft">Genre</label>
+          <input
+            type="text"
+            th:field="*{genre}"
+            placeholder="Action, Drame, Science-Fiction..."
+            class="w-full mt-1 px-3 py-2 bg-cinemaBg border border-white/10 rounded text-white focus:outline-none focus:border-cinemaAccent"
+          />
+          <p class="text-red-400 text-sm" th:errors="*{genre}"></p>
+        </div>
+
+        <!-- Movie duration -->
+        <div>
+          <label class="text-sm text-cinemaSoft">Durée (minutes)</label>
+          <input
+            type="number"
+            th:field="*{duration}"
+            placeholder="120"
+            class="w-full mt-1 px-3 py-2 bg-cinemaBg border border-white/10 rounded text-white focus:outline-none focus:border-cinemaAccent"
+          />
+          <p class="text-red-400 text-sm" th:errors="*{duration}"></p>
+        </div>
+
+        <!-- Button -->
+        <button
+          type="submit"
+          class="w-full py-2 bg-cinemaAccent rounded-lg hover:opacity-90 transition text-white font-medium"
+          th:text="${movie.id == null} ? 'Enregistrer' : 'Modifier'"
+        ></button>
+
+      </form>
+
+    </div>
+  </body>
+</html>
