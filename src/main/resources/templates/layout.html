@@ -57,6 +57,13 @@
           </a>
         </div>
 
+        <!-- USER -->
+        <div th:if="${session.user != null and session.user.role.name() == 'USER'}">
+          <a th:href="@{/reservation/list}" class="hover:text-white transition">
+            Mes réservations
+          </a>
+        </div>
+
         <!-- login/logout -->
         <div class="flex gap-3 ml-6">
 
