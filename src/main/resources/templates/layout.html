@@ -1,14 +1,41 @@
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
-     <meta charset="ISO-8859-1" />
-    <title>Distopia</title>
+  <meta charset="ISO-8859-1" />
+  <title>Distopia</title>
 </head>
+
 <body>
-    <main>
-        <section layout:fragment="content"></section>
-    </main>
+  <header>
+    <nav>
+      <!-- ADMIN -->
+      <div th:if="${session.user != null and session.user.role.name() == 'ADMIN'}">
+        <a th:href="@{/admin/city/list}">Gestion des villes</a>
+        <a th:href="@{/admin/cinema/list}">Gestion des cinemas</a>
+        <!-- <a th:href="@{/admin/movie/list}">Films</a> -->
+        <!-- <a th:href="@{/admin/screenings/list}">Séances</a> -->
+      </div>
+
+      <!-- VISITOR + USER -->
+      <div th:if="${session.user == null or session.user.role.name() == 'USER'}">
+        <a th:href="@{/cinema/list}">Cinemas</a>
+      </div>
+
+      <!-- VISITOR -->
+      <div th:if="${session.user == null}">
+        <a th:href="@{/login}">Se connecter</a>
+      </div>
+
+      <!-- USER + ADMIN -->
+      <div th:if="${session.user != null}">
+        <a th:href="@{/logout}">Se déconnecter</a>
+      </div>
+      
+    </nav>
+  </header>
+  <main>
+    <section layout:fragment="content"></section>
+  </main>
 </body>
+
 </html>

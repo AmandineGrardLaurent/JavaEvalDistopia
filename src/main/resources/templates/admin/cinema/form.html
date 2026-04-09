@@ -1,0 +1,55 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}">
+
+<head>
+  <title>Formulaire cinema</title>
+</head>
+
+<body>
+  <div layout:fragment="content">
+    <!-- Title -->
+    <h1 th:text="${cinema.id == null} 
+          ? 'Ajouter un cinema' 
+          : 'Modifier le cinema n° ' + cinema.id"></h1>
+    <!-- formulaire -->
+    <form th:action="@{/admin/cinema/save}" method="post" th:object="${cinema}">
+      <!-- id -->
+      <input type="hidden" th:field="*{id}" />
+
+      <!-- name -->
+      <label for="name">Nom du cinema</label>
+      <input id="name" type="text" th:field="*{name}" placeholder="UGC, CGR..." />
+      <span th:errors="${cinema.name}"></span>
+
+      <!-- address -->
+      <label for="address">Adresse du cinéma</label>
+      <input id="address" type="text" th:field="*{address}" placeholder="5 Quai des Chartrons..." />
+      <span th:errors="${cinema.address}"></span>
+
+      <!-- seatPrice -->
+      <label for="seatPrice">Prix d'une place</label>
+      <input id="seatPrice" type="number" th:field="*{seatPrice}" step="0.5" />
+      <span th:errors="${cinema.seatPrice}"></span>
+
+      <!-- city -->
+      <label for="city">
+        Ville
+      </label>
+
+      <div>
+        <div th:each="city : ${cities}">
+          <input type="radio" th:field="*{city.id}" th:value="${city.id}" />
+
+          <label th:text="${city.name}"></label>
+        </div>
+      </div>
+
+      <!-- button -->
+      <button type="submit" th:text="${cinema.id == null} ? 'Enregistrer' : 'Modifier'"></button>
+
+    </form>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title>Liste des villes</title>
+  </head>
+
+  <body>
+    <div layout:fragment="content">
+      <!-- City list -->
+      <section>
+        <article th:each="city : ${cities}">
+          <p th:text="${city.name + ' - ' + city.zipcode}"></p>
+          <a
+            th:text="Supprimer"
+            th:href="@{/admin/city/delete(id=${city.id})}"
+          ></a>
+          <a
+            th:text="Modifier"
+            th:href="@{/admin/city/form(id=${city.id})}"
+          ></a>
+        </article>
+      </section>
+      <a th:href="@{/admin/city/form}"> Ajouter une nouvelle ville </a>
+    </div>
+  </body>
+</html>

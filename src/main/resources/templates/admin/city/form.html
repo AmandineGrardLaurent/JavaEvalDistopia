@@ -1,0 +1,50 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title>Formulaire ville</title>
+  </head>
+
+  <body>
+    <div layout:fragment="content">
+      <!-- Title -->
+      <h1
+        th:text="${city.id == null} 
+          ? 'Ajouter une ville' 
+          : 'Modifier la ville n° ' + city.id"
+      ></h1>
+      <!-- formulaire -->
+      <form th:action="@{/admin/city/save}" method="post" th:object="${city}">
+        <!-- id -->
+        <input type="hidden" th:field="*{id}" />
+        <!-- name -->
+        <label for="name">Nom de la ville</label>
+        <input
+          id="name"
+          type="text"
+          th:field="*{name}"
+          placeholder="Avignon, Toulouse..."
+        />
+        <span th:errors="${city.name}"></span>
+        <!-- zipcode -->
+        <label for="zipcode">Code postal de la ville</label>
+        <input
+          id="zipcode"
+          type="text"
+          th:field="*{zipcode}"
+          placeholder="84000, 31000..."
+        />
+        <span th:errors="${city.zipcode}"></span>
+
+        <!-- button -->
+        <button
+          type="submit"
+          th:text="${city.id == null} ? 'Enregistrer' : 'Modifier'"
+        ></button>
+      </form>
+    </div>
+  </body>
+</html>
