@@ -1,0 +1,84 @@
+<!doctype html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title>Mes réservations</title>
+  </head>
+
+  <body>
+    <div layout:fragment="content" class="space-y-8">
+      <!-- Title -->
+      <section class="flex items-center justify-between">
+        <h2 class="text-3xl font-bold text-cinemaAccent tracking-wide">
+          Mes réservations
+        </h2>
+      </section>
+
+      <!-- Empty state -->
+      <div
+        th:if="${#lists.isEmpty(reservations)}"
+        class="text-center py-12 text-white/60"
+      >
+        <p class="text-lg">Aucune réservation pour le moment</p>
+      </div>
+
+      <!-- Reservation list -->
+      <section class="grid gap-4">
+        <article
+          th:each="reservation : ${reservations}"
+          class="bg-cinemaCard border border-white/10 rounded-xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4 hover:shadow-lg hover:shadow-black/30 transition-all duration-200"
+        >
+          
+          <div class="space-y-2">
+
+            <!-- Movie title -->
+            <h3
+              class="text-xl font-semibold text-white"
+              th:text="${reservation.screening.movie.title}"
+            ></h3>
+
+            <!-- Cinema name -->
+            <p
+              class="text-sm font-medium text-cinemaAccent"
+              th:text="${reservation.screening.cinema.name}"
+            ></p>
+
+            <!-- Cinema address -->
+            <p class="text-sm text-white/60">
+              <span th:text="${reservation.screening.cinema.address}"></span>,
+              <span th:text="${reservation.screening.cinema.city.name}"></span>
+            </p>
+
+            <!-- Screening date -->
+            <p class="text-sm text-white/80 font-medium">
+              Séance :
+              <span
+                class="text-white"
+                th:text="${#temporals.format(reservation.screening.date, 'EEEE dd MMMM yyyy - HH:mm')}"
+              ></span>
+            </p>
+          </div>
+
+          <!-- Reservation date -->
+          <div class="text-sm text-white/50 text-right space-y-1">
+            <p>
+              Réservé le :
+              <span
+                th:text="${#temporals.format(reservation.reservationDate, 'dd/MM/yyyy HH:mm')}"
+              ></span>
+            </p>
+
+            <!-- Reservation seats-->
+            <p class="text-white/70 font-medium">
+              Places :
+              <span class="text-white" th:text="${reservation.seats}"></span>
+            </p>
+          </div>
+        </article>
+      </section>
+    </div>
+  </body>
+</html>
