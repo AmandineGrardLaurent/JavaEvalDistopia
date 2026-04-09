@@ -3,39 +3,89 @@
 <head>
   <meta charset="ISO-8859-1" />
   <title>Distopia</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cinemaBg: '#0b0614',
+            cinemaCard: '#140a25',
+            cinemaAccent: '#a855f7',
+            cinemaSoft: '#c4b5fd'
+          }
+        }
+      }
+    }
+  </script>
 </head>
 
-<body>
-  <header>
-    <nav>
-      <!-- ADMIN -->
-      <div th:if="${session.user != null and session.user.role.name() == 'ADMIN'}">
-        <a th:href="@{/admin/city/list}">Gestion des villes</a>
-        <a th:href="@{/admin/cinema/list}">Gestion des cinemas</a>
-        <!-- <a th:href="@{/admin/movie/list}">Films</a> -->
-        <!-- <a th:href="@{/admin/screenings/list}">Séances</a> -->
-      </div>
+<body class="bg-cinemaBg text-white min-h-screen">
+  <!-- header -->
+  <header class="bg-cinemaCard border-b border-white/10">
+    <nav class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
 
-      <!-- VISITOR + USER -->
-      <div th:if="${session.user == null or session.user.role.name() == 'USER'}">
-        <a th:href="@{/cinema/list}">Cinemas</a>
-      </div>
+      <!-- logo -->
+      <h1 class="text-2xl font-semibold tracking-wide text-white">
+        Distopia Cinema
+      </h1>
 
-      <!-- VISITOR -->
-      <div th:if="${session.user == null}">
-        <a th:href="@{/login}">Se connecter</a>
-      </div>
+      <!-- navbar -->
+      <div class="flex items-center gap-6 text-sm text-cinemaSoft">
 
-      <!-- USER + ADMIN -->
-      <div th:if="${session.user != null}">
-        <a th:href="@{/logout}">Se déconnecter</a>
+        <!-- ADMIN -->
+        <div th:if="${session.user != null and session.user.role.name() == 'ADMIN'}" class="flex gap-4">
+          <a th:href="@{/admin/city/list}" class="hover:text-white transition">
+            Gérer les villes
+          </a>
+          <a th:href="@{/admin/cinema/list}" class="hover:text-white transition">
+            Gérer les cinémas
+          </a>
+          <a th:href="@{/admin/movie/list}" class="hover:text-white transition"> 
+            Gérer les films
+          </a>
+          <a th:href="@{/admin/screenings/list}" class="hover:text-white transition">
+            Gérer les séances
+          </a>
+        </div>
+
+        <!-- VISITOR + USER -->
+        <div th:if="${session.user == null or session.user.role.name() == 'USER'}">
+          <a th:href="@{/cinema/list}" class="hover:text-white transition">
+            Cinémas
+          </a>
+        </div>
+
+        <!-- login/logout -->
+        <div class="flex gap-3 ml-6">
+
+          <!-- VISITOR -->
+          <a th:if="${session.user == null}" th:href="@{/login}"
+            class="px-3 py-1 rounded bg-cinemaAccent text-white hover:opacity-90 transition">
+            Connexion
+          </a>
+          <!-- USER + VISITOR -->
+          <a th:if="${session.user != null}" th:href="@{/logout}"
+            class="px-3 py-1 rounded border border-white/20 hover:bg-white/10 transition">
+            Déconnexion
+          </a>
+        </div>
+
       </div>
-      
     </nav>
   </header>
-  <main>
+
+  <!-- main -->
+  <main class="max-w-6xl mx-auto p-6">
     <section layout:fragment="content"></section>
   </main>
+
+  <!-- footer -->
+  <footer class="text-center text-xs text-cinemaSoft py-6 border-t border-white/10">
+    -- Distopia Cinema --
+  </footer>
+
 </body>
 
 </html>

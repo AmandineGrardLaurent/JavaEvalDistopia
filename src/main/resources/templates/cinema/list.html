@@ -1,73 +1,95 @@
 <!doctype html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layout}"
->
-  <head>
-    <title>Liste des cinémas</title>
-  </head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 
-  <body>
-    <div layout:fragment="content">
-      <!-- Search Form -->
-      <section>
-        <form th:action="@{/cinema/list}" method="get">
-          <label> 🔍 </label>
+<head>
+  <title>Cinémas</title>
+</head>
 
-          <input
-            type="text"
-            name="search"
-            placeholder="Rechercher un cinéma..."
-            th:value="${search}"
-          />
+<body>
 
-          <button type="submit">Rechercher</button>
-        </form>
-      </section>
+<div layout:fragment="content" class="space-y-8">
 
-      <!-- Filters by city -->
-      <section>
-        <ul>
-          <li th:each="city : ${cities}">
-            <a
-              th:href="@{/cinema/list(page=0, cityName=${city.name}, search=${search})}"
-              th:text="${city.name}"
-            ></a>
-          </li>
-          <!-- All cities -->
-          <li>
-            <a th:href="@{/cinema/list(page=0,  search=${search})}">
-              Toutes les villes
-            </a>
-          </li>
-        </ul>
-      </section>
+  <!-- Search bar-->
+  <section class="bg-cinemaCard p-4 rounded-lg border border-white/10">
+    <form th:action="@{/cinema/list}" method="get"
+          class="flex gap-3 items-center">
 
-      <!-- Cinema list -->
-      <section>
-        <article th:each="cinema : ${cinemas}">
-          <p
-            th:text="${cinema.name + ' au ' + cinema.address + ' à ' + cinema.city.name}"
-          ></p>
-          <a
-            th:href="@{/cinema/screenings(cinemaId=${cinema.id})}"
-            th:text="${'Voir les séances'}"
-          ></a>
-        </article>
+      <input type="text"
+             name="search"
+             placeholder="Rechercher un cinéma..."
+             th:value="${search}"
+             class="w-full bg-cinemaBg border border-white/10 rounded px-3 py-2 text-white placeholder:text-white/40 focus:outline-none focus:border-cinemaAccent"/>
 
-        <!-- Pagination -->
-        <div>
-          <ul>
-            <li th:each="page, status : ${pages}">
-              <a
-                th:href="@{/cinema/list(page=${status.index}, cityName=${cityName}, search=${search})}"
-                th:text="${(status.index)+1}"
-              ></a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      <button type="submit"
+              class="px-4 py-2 bg-cinemaAccent rounded hover:opacity-90 transition">
+        Rechercher
+      </button>
+    </form>
+  </section>
+
+  <!-- Filters by city -->
+  <section class="bg-cinemaCard p-4 rounded-lg border border-white/10">
+    <div class="flex flex-wrap gap-2">
+
+      <a th:each="city : ${cities}"
+         th:href="@{/cinema/list(page=0, cityName=${city.name}, search=${search})}"
+         th:text="${city.name}"
+         class="px-3 py-1 rounded-full border border-white/10 text-cinemaSoft hover:bg-cinemaAccent hover:text-white transition">
+      </a>
+
+      <!-- All cities -->
+      <a th:href="@{/cinema/list(page=0, search=${search})}"
+         class="px-3 py-1 rounded-full bg-white/10 text-white hover:bg-cinemaAccent transition">
+        Toutes les villes
+      </a>
+
     </div>
-  </body>
+  </section>
+
+  <!-- Cinema list -->
+  <section class="grid gap-4">
+
+    <article th:each="cinema : ${cinemas}"
+             class="bg-cinemaCard border border-white/10 rounded-lg p-4 hover:border-cinemaAccent transition">
+
+      <p class="text-white font-medium"
+         th:text="${cinema.name}">
+      </p>
+
+      <p class="text-cinemaSoft text-sm mt-1"
+         th:text="${cinema.address + ' • ' + cinema.city.name}">
+      </p>
+
+      <div class="mt-3">
+        <a th:href="@{/cinema/screenings(cinemaId=${cinema.id})}"
+           class="inline-block text-sm text-cinemaAccent hover:underline">
+          Voir les séances →
+        </a>
+      </div>
+
+    </article>
+
+  </section>
+
+  <!-- Pagination -->
+  <section class="flex justify-center pt-4">
+
+    <div class="flex gap-2">
+
+      <a th:each="page, status : ${pages}"
+         th:href="@{/cinema/list(page=${status.index}, cityName=${cityName}, search=${search})}"
+         th:text="${status.index + 1}"
+         th:classappend="${currentPage == status.index} ? 'px-3 py-1 rounded border border-white/10 bg-cinemaAccent text-white' : 'px-3 py-1 rounded border border-white/10 text-cinemaSoft hover:bg-cinemaAccent hover:text-white transition'"
+         class="px-3 py-1 rounded border border-white/10 text-cinemaSoft hover:bg-cinemaAccent hover:text-white transition">
+      </a>
+
+    </div>
+
+  </section>
+
+</div>
+
+</body>
 </html>

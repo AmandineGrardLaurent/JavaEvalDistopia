@@ -1,8 +1,52 @@
-<form method="post" action="/login">
-    <input type="text" name="email" placeholder="Email"/>
-    <input type="password" name="password" placeholder="Password"/>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <body>
+    <div layout:fragment="content">
+        <!-- Auth form -->
+      <form
+        method="post"
+        action="/login"
+        class="max-w-md mx-auto mt-20 bg-cinemaCard border border-white/10 rounded-lg p-6 space-y-4"
+      >
+        <h1 class="text-xl font-semibold text-center text-cinemaSoft">
+          Connexion
+        </h1>
 
-    <button type="submit">Login</button>
-</form>
+        <!-- Email -->
+        <input
+          type="text"
+          name="email"
+          placeholder="Email"
+          class="w-full px-3 py-2 bg-cinemaBg border border-white/10 rounded text-white placeholder:text-white/40 focus:outline-none focus:border-cinemaAccent"
+        />
 
-<p th:if="${error}" th:text="${error}" style="color:red;"></p>
+        <!-- Password -->
+        <input
+          type="password"
+          name="password"
+          placeholder="Mot de passe"
+          class="w-full px-3 py-2 bg-cinemaBg border border-white/10 rounded text-white placeholder:text-white/40 focus:outline-none focus:border-cinemaAccent"
+        />
+
+        <!-- Button -->
+        <button
+          type="submit"
+          class="w-full py-2 bg-cinemaAccent rounded hover:opacity-90 transition font-medium"
+        >
+          Se connecter
+        </button>
+
+        <!-- Error message -->
+        <p
+          th:if="${error}"
+          th:text="${error}"
+          class="text-red-400 text-sm text-center"
+        ></p>
+        
+      </form>
+    </div>
+  </body>
+</html>

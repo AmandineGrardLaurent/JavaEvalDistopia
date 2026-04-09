@@ -77,8 +77,10 @@ public class CinemaController {
         // Result: each Movie key maps to a list of its screenings
         Map<Movie, List<Screening>> screeningsByMovie = screenings.stream()
                 .collect(Collectors.groupingBy(Screening::getMovie));
+        Cinema cinema = cinemaRepository.findById(cinemaId).orElse(null);
 
         model.addAttribute("screeningsByMovie", screeningsByMovie);
+        model.addAttribute("cinema", cinema);
 
         return "cinema/screenings";
     }

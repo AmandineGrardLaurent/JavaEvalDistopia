@@ -2,6 +2,7 @@ package fms.Distopia.web;
 
 import fms.Distopia.dao.UserRepository;
 import fms.Distopia.entities.User;
+import fms.Distopia.util.AuthHelper;
 
 import javax.servlet.http.HttpSession;
 
@@ -37,6 +38,10 @@ public class AuthController {
         }
 
         session.setAttribute("user", user);
+
+        if (AuthHelper.isAdmin(session)) {
+            return "redirect:/admin/cinema/list";
+        } 
 
         return "redirect:/cinema/list";
     }
