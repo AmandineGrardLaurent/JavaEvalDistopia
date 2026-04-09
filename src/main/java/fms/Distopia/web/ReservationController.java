@@ -1,6 +1,7 @@
 package fms.Distopia.web;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -32,6 +33,20 @@ public class ReservationController {
 
     @Autowired
     ReservationRepository reservationRepository;
+
+    @GetMapping("/reservation/list")
+    public String listReservationByUser(Model model, HttpSession session) {
+
+        if (!AuthHelper.isLogged(session)) {
+            return "redirect:/login";
+        }
+        User user = AuthHelper.getUser(session);
+        Long userId = user.getId();
+        List<Reservation> reservations = reservationRepository.findByUserId(userId);
+
+        model.addAttribute("reservations", reservations);
+        return "/reservation/list";
+    }
 
     @GetMapping("/screening/reservation/form")
     public String form(Model model,
