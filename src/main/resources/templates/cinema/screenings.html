@@ -59,7 +59,7 @@
                 <!-- Button "réserver" for USER -->
                 <a
                   th:if="${session.user != null and session.user.role.name() == 'USER'}"
-                  th:href="@{/screening/reserve(id=${screening.id})}"
+                  th:href="@{/screening/reservation/form(screeningId=${screening.id})}"
                   class="ml-2 px-2 py-0.5 text-xs rounded bg-cinemaAccent text-white hover:opacity-90 transition"
                 >
                   Réserver
