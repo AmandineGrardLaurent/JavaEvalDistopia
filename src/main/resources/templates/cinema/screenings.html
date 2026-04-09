@@ -5,25 +5,56 @@
   layout:decorate="~{layout}"
 >
   <head>
-    <title>Liste des séances</title>
+    <title>Séances</title>
   </head>
 
   <body>
-    <div layout:fragment="content">
-      <section>
-        <article th:each="movie : ${screeningsByMovie}">
-          <!-- movie title -->
-          <h2 th:text="${movie.key.title}"></h2>
+    <div layout:fragment="content" class="space-y-8">
+      <section class="text-center">
+        <h2
+          class="text-2xl font-semibold text-white"
+          th:text="${'Séances du cinéma ' + cinema.name}"
+        ></h2>
+        <p class="text-cinemaSoft text-sm mt-1">
+          Découvrez les films et leurs horaires
+        </p>
+      </section>
 
-          <!-- movie description -->
-          <p th:text="${movie.key.description}"></p>
+      <!-- movies -->
+      <section class="space-y-6">
+        <article
+          th:each="movie : ${screeningsByMovie}"
+          class="bg-cinemaCard border border-white/10 rounded-lg p-5"
+        >
+          <!-- title -->
+          <h2
+            class="text-lg font-semibold text-cinemaAccent"
+            th:text="${movie.key.title}"
+          ></h2>
 
-          <!-- screenings dates -->
-          <ul>
-            <li th:each="screening : ${movie.value}">
-              <span th:text="${screening.date}"></span>
-            </li>
-          </ul>
+          <!-- description -->
+          <p
+            class="text-cinemaSoft text-sm mt-2"
+            th:text="${movie.key.description}"
+          ></p>
+
+          <!-- screenings -->
+          <div class="mt-4">
+            <p class="text-xs uppercase tracking-wide text-white/50 mb-2">
+              Horaires
+            </p>
+
+            <div class="flex flex-wrap gap-2">
+              <span
+                th:each="screening : ${movie.value}"
+                class="px-3 py-1 rounded-full bg-cinemaBg border border-white/10 text-sm text-white/80 hover:border-cinemaAccent transition"
+              >
+                <span
+                  th:text="${#temporals.format(screening.date, 'dd MMM • HH:mm')}"
+                ></span>
+              </span>
+            </div>
+          </div>
         </article>
       </section>
     </div>
